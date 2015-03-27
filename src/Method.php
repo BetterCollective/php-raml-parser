@@ -318,6 +318,11 @@ class Method implements ArrayInstantiationInterface
 
     // --
 
+    public function getBodyTypes()
+    {
+        return array_keys($this->bodyList);
+    }
+
     /**
      * Get the body by type
      *
