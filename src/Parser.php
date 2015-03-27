@@ -363,6 +363,15 @@ class Parser
                 }
             }
 
+            // ATJ: Propagate resource level trait declarations to method level
+            foreach($ramlData as $key => $value)
+            {
+                if (strpos($key, '/') === 0)
+                {
+                    $array[$key] = $this->propagateTraits($value, (array)$value['is']);
+                }
+            }
+
             foreach ($ramlData as $key => $value) {
                 if (strpos($key, '/') === 0) {
                     $name = (isset($value['displayName'])) ? $value['displayName'] : substr($key, 1);
@@ -499,6 +508,39 @@ class Parser
         } else {
             return $structure;
         }
+    }
+
+    private function isMethodKeyword($keyword)
+    {
+        return  strcmp($keyword, 'get') == 0 ||
+        strcmp($keyword, 'post') == 0 ||
+        strcmp($keyword, 'put') == 0 ||
+        strcmp($keyword, 'delete') == 0 ||
+        strcmp($keyword, 'head') == 0 ||
+        strcmp($keyword, 'trace') == 0 ||
+        strcmp($keyword, 'options') == 0 ||
+        strcmp($keyword, 'connect') == 0 ||
+        strcmp($keyword, 'patch') == 0;
+    }
+
+    private function propagateTraits($resource, array $traits)
+    {
+        foreach($resource as $key => $value)
+        {
+            if(strpos($key, '/') === 0)
+            {
+                // This is a sub resource
+                $resource[$key] = $this->propagateTraits($value, array_unique(array_merge($traits, (array)$value['is'])));
+            }
+            else if($this->isMethodKeyword($key))
+            {
+                $newValue = $value;
+                $newValue['is'] = array_unique(array_merge($traits, (array)$value['is']));
+                $resource[$key] = $newValue;
+            }
+        }
+
+        return $resource;
     }
 
     /**
