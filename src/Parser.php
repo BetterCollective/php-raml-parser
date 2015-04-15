@@ -368,7 +368,7 @@ class Parser
             {
                 if (strpos($key, '/') === 0)
                 {
-                    $array[$key] = $this->propagateTraits($value, (array)$value['is']);
+                    $ramlData[$key] = $this->propagateTraits($value, (array)$value['is']);
                 }
             }
 
