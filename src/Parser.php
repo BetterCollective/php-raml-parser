@@ -535,7 +535,11 @@ class Parser
             else if($this->isMethodKeyword($key))
             {
                 $newValue = $value;
-                $newValue['is'] = array_unique(array_merge($traits, (array)$value['is']));
+				if (array_key_exists('is', $value)) {
+					$newValue['is'] = array_unique(array_merge($traits, (array)$value['is']));
+				} else {
+					$newValue['is'] = $traits;
+				}
                 $resource[$key] = $newValue;
             }
         }
