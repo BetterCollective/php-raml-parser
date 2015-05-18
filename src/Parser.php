@@ -368,7 +368,12 @@ class Parser
             {
                 if (strpos($key, '/') === 0)
                 {
-                    $ramlData[$key] = $this->propagateTraits($value, (array)$value['is']);
+					$is = array();
+					if (is_array($value) && array_key_exists('is', $value)) {
+						$is = $value['is'];
+					}
+
+                    $ramlData[$key] = $this->propagateTraits($value, $is);
                 }
             }
 
@@ -529,8 +534,13 @@ class Parser
         {
             if(strpos($key, '/') === 0)
             {
+				$is = array();
+				if (is_array($value) && array_key_exists('is', $value)) {
+					$is = $value['is'];
+				}
+
                 // This is a sub resource
-                $resource[$key] = $this->propagateTraits($value, array_unique(array_merge($traits, (array)$value['is'])));
+                $resource[$key] = $this->propagateTraits($value, array_unique(array_merge($traits, $is)));
             }
             else if($this->isMethodKeyword($key))
             {
