@@ -129,6 +129,10 @@ class Response implements ArrayInstantiationInterface
      */
     public function getTypes()
     {
+		if ($this->bodyList === null) {
+			return array();
+		}
+
         return array_keys($this->bodyList);
     }
 
