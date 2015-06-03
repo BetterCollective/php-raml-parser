@@ -368,7 +368,12 @@ class Parser
             {
                 if (strpos($key, '/') === 0 && array_key_exists('is', $value))
                 {
-                    $ramlData[$key] = $this->propagateTraits($value, (array)$value['is']);
+					$is = array();
+					if (is_array($value) && array_key_exists('is', $value)) {
+						$is = $value['is'];
+					}
+
+                    $ramlData[$key] = $this->propagateTraits($value, $is);
                 }
             }
 
@@ -519,7 +524,7 @@ class Parser
     {
         foreach($resource as $key => $value)
         {
-	        if (array_key_exists('is', $value)) {
+	        if (is_array($value) && array_key_exists('is', $value)) {
 		        $traits = array_unique(array_merge($traits, (array)$value['is']));
 	        }
 
