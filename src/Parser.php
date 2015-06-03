@@ -366,7 +366,7 @@ class Parser
             // ATJ: Propagate resource level trait declarations to method level
             foreach($ramlData as $key => $value)
             {
-                if (strpos($key, '/') === 0)
+                if (strpos($key, '/') === 0 && array_key_exists('is', $value))
                 {
                     $ramlData[$key] = $this->propagateTraits($value, (array)$value['is']);
                 }
@@ -512,34 +512,26 @@ class Parser
 
     private function isMethodKeyword($keyword)
     {
-        return  strcmp($keyword, 'get') == 0 ||
-        strcmp($keyword, 'post') == 0 ||
-        strcmp($keyword, 'put') == 0 ||
-        strcmp($keyword, 'delete') == 0 ||
-        strcmp($keyword, 'head') == 0 ||
-        strcmp($keyword, 'trace') == 0 ||
-        strcmp($keyword, 'options') == 0 ||
-        strcmp($keyword, 'connect') == 0 ||
-        strcmp($keyword, 'patch') == 0;
+	    return in_array($keyword, array('get', 'post', 'put', 'delete', 'head', 'trace', 'options', 'connect', 'patch'));
     }
 
     private function propagateTraits($resource, array $traits)
     {
         foreach($resource as $key => $value)
         {
+	        if (array_key_exists('is', $value)) {
+		        $traits = array_unique(array_merge($traits, (array)$value['is']));
+	        }
+
             if(strpos($key, '/') === 0)
             {
                 // This is a sub resource
-                $resource[$key] = $this->propagateTraits($value, array_unique(array_merge($traits, (array)$value['is'])));
+	            $resource[$key] = $this->propagateTraits($value, $traits);
             }
             else if($this->isMethodKeyword($key))
             {
                 $newValue = $value;
-				if (array_key_exists('is', $value)) {
-					$newValue['is'] = array_unique(array_merge($traits, (array)$value['is']));
-				} else {
-					$newValue['is'] = $traits;
-				}
+				$newValue['is'] = $traits;
                 $resource[$key] = $newValue;
             }
         }
