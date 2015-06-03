@@ -366,7 +366,7 @@ class Parser
             // ATJ: Propagate resource level trait declarations to method level
             foreach($ramlData as $key => $value)
             {
-                if (strpos($key, '/') === 0 && array_key_exists('is', $value))
+                if (strpos($key, '/') === 0)
                 {
 					$is = array();
 					if (is_array($value) && array_key_exists('is', $value)) {
