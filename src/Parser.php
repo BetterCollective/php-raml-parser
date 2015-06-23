@@ -14,6 +14,7 @@ use Raml\SecurityScheme\SecuritySettingsParserInterface;
 
 use Raml\FileLoader\DefaultFileLoader;
 use Raml\FileLoader\JsonSchemaFileLoader;
+use Raml\FileLoader\JsonDataFileLoader;
 use Raml\FileLoader\FileLoaderInterface;
 
 use Symfony\Component\Yaml\Yaml;
@@ -105,6 +106,7 @@ class Parser
         if ($fileLoaders === null) {
             $fileLoaders = [
                 new JsonSchemaFileLoader(),
+				new JsonDataFileLoader(),
                 new DefaultFileLoader()
             ];
         }
