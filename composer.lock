@@ -4,34 +4,48 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "49d24c34df75f32f7c7d737212c10f06",
-    "content-hash": "9507c1b557e71794bfa736c562395e8c",
+    "hash": "df3181bd36e1c6f5752208c3b578b468",
+    "content-hash": "664e9c303ff3b023390bbf880dace7a4",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
-            "version": "1.1.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/alecsammon/json-schema.git",
-                "reference": "05ff6d8d79fe3ad190b0663d80d3f9deee79416c"
+                "url": "https://github.com/justinrainbow/json-schema.git",
+                "reference": "cc84765fb7317f6b07bd8ac78364747f95b86341"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alecsammon/json-schema/zipball/05ff6d8d79fe3ad190b0663d80d3f9deee79416c",
-                "reference": "05ff6d8d79fe3ad190b0663d80d3f9deee79416c",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/cc84765fb7317f6b07bd8ac78364747f95b86341",
+                "reference": "cc84765fb7317f6b07bd8ac78364747f95b86341",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.3.29"
             },
+            "require-dev": {
+                "json-schema/json-schema-test-suite": "1.1.0",
+                "phpdocumentor/phpdocumentor": "~2",
+                "phpunit/phpunit": "~3.7"
+            },
+            "bin": [
+                "bin/validate-json"
+            ],
             "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "JsonSchema": "src/"
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
                 }
             },
+            "autoload": {
+                "psr-4": {
+                    "JsonSchema\\": "src/JsonSchema/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "NewBSD"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -57,10 +71,7 @@
                 "json",
                 "schema"
             ],
-            "support": {
-                "source": "https://github.com/alecsammon/json-schema/tree/v1.1.0"
-            },
-            "time": "2012-01-03 00:33:17"
+            "time": "2016-01-25 15:43:01"
         },
         {
             "name": "oodle/inflect",
